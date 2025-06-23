@@ -67,7 +67,7 @@ if __name__ == "__main__":
     else:
         print("\nCompilation completed with errors.")
     
-    # Then start the GUI
+    
     root = tk.Tk()
     app = CompilerGUI(root)
     root.mainloop()
