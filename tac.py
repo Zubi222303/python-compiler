@@ -170,3 +170,4 @@ class ThreeAddressCodeGenerator:
         
         self.code.append(f"CALL {func_name} {temp}")
         return temp
+

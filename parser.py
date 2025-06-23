@@ -102,7 +102,7 @@ class Parser:
             if next_token and next_token.type == 'ASSIGN':
                 return self.assignment_statement()
             elif next_token and next_token.value == '(':
-                return self.function_call()
+                return self.function_call_statement()
         elif token.value == '{':
             return self.block()
         return None, None
@@ -193,6 +193,11 @@ class Parser:
         ], line=var.line, column=var.column)
         
         return assign_parse, assign_ast
+
+    def function_call_statement(self):
+        call_parse, call_ast = self.function_call()
+        self.expect([';'], "Expected ';' after function call")
+        return call_parse, call_ast
 
     def if_statement(self):
         start = self.expect(['Agar'], "Expected 'Agar'")
@@ -323,7 +328,6 @@ class Parser:
         
         call_parse.children.append(args_parse)
         self.expect([')'], "Expected ')' after function arguments")
-        self.expect([';'], "Expected ';' after function call")
         
         call_ast = ASTNode('FunctionCall', args_ast, value=fn.value, line=fn.line, column=fn.column)
         return call_parse, call_ast
